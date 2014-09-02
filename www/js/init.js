@@ -39,19 +39,17 @@ $(function () { // DOM ready
 
   $(window).resize(on_resize);
 
-  
+  // $('.icone').on('dragstart', function (e) {
+  //   // prevent image dragging
+  //   e.preventDefault();
+  // });
 
-  $('.icone').live('dragstart', function (e) {
-    // prevent image dragging
-    e.preventDefault();
-  });
-
-  $('#zone_message').live('touchmove mousemove', function (e) {
+  $('#zone_message').on('touchmove mousemove', function (e) {
     // prevent window scrolling
     e.preventDefault();
   });
 
-  $('.icone').live('touchstart mousedown', function (e) {
+  $('.icone').on('touchstart mousedown', function (e) {
   
     if (!deplacement_en_cours && !deplacement_interdit) {
       dragmove = false;
@@ -72,7 +70,7 @@ $(function () { // DOM ready
 
   });
 
-  $('#zone_jeu').live('touchmove mousemove', function (e) {
+  $('#zone_jeu').on('touchmove mousemove', function (e) {
     // prevent window scrolling
     e.preventDefault();
 
@@ -129,7 +127,7 @@ $(function () { // DOM ready
     }
   });
 
-  $('#zone_jeu').live('touchend mouseup', function (e) {
+  $('#zone_jeu').on('touchend mouseup', function (e) {
     if (deplacement_en_cours) {
       deplacement_en_cours = false;
       $icone.css('z-index', 10);
@@ -139,17 +137,17 @@ $(function () { // DOM ready
     }
   });
 
-  $('.bt_new_game').live('click', function () {
+  $('.bt_new_game').on('click', function () {
     // tracking Google Analytics
     _gaq.push(['_trackEvent', 'Fruit Salad', 'Play again', 'Play again']);
     init_game();
   });
 
-  $('.bt-app-wall').live('click', function () {
+  $('.bt-app-wall').on('click', function () {
     $('#app-wall').show();
   });
 
-  $('#app-wall').live('click', function () {
+  $('#app-wall').on('click', function () {
     $('#app-wall').hide();
   });
 
