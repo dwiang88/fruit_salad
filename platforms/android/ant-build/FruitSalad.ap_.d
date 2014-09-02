@@ -35,7 +35,6 @@
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/fonts \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/images \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/index.html \
-/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/index.html.bak \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/css/index.css \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/css/styles.css \
@@ -63,4 +62,5 @@
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/images/picto/star.gif \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/index.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/init.js \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/jquery.min.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/ant-build/AndroidManifest.xml \

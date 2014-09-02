@@ -39,17 +39,17 @@ $(function () { // DOM ready
 
   $(window).resize(on_resize);
 
-  // $('.icone').on('dragstart', function (e) {
-  //   // prevent image dragging
-  //   e.preventDefault();
-  // });
+  $(document).on('dragstart', '.icone', function (e) {
+    // prevent image dragging
+    e.preventDefault();
+  });
 
-  $('#zone_message').on('touchmove mousemove', function (e) {
+  $(document).on('touchmove mousemove', '#zone_message', function (e) {
     // prevent window scrolling
     e.preventDefault();
   });
 
-  $('.icone').on('touchstart mousedown', function (e) {
+  $(document).on('touchstart mousedown', '.icone', function (e) {
   
     if (!deplacement_en_cours && !deplacement_interdit) {
       dragmove = false;
@@ -70,7 +70,7 @@ $(function () { // DOM ready
 
   });
 
-  $('#zone_jeu').on('touchmove mousemove', function (e) {
+  $(document).on('touchmove mousemove', '#zone_jeu', function (e) {
     // prevent window scrolling
     e.preventDefault();
 
@@ -127,7 +127,7 @@ $(function () { // DOM ready
     }
   });
 
-  $('#zone_jeu').on('touchend mouseup', function (e) {
+  $(document).on('touchend mouseup', '#zone_jeu', function (e) {
     if (deplacement_en_cours) {
       deplacement_en_cours = false;
       $icone.css('z-index', 10);
@@ -137,17 +137,16 @@ $(function () { // DOM ready
     }
   });
 
-  $('.bt_new_game').on('click', function () {
+  $(document).on('click', '.bt_new_game', function () {
     // tracking Google Analytics
-    _gaq.push(['_trackEvent', 'Fruit Salad', 'Play again', 'Play again']);
     init_game();
   });
 
-  $('.bt-app-wall').on('click', function () {
+  $(document).on('click', '.bt-app-wall', function () {
     $('#app-wall').show();
   });
 
-  $('#app-wall').on('click', function () {
+  $(document).on('click', '#app-wall', function () {
     $('#app-wall').hide();
   });
 
@@ -231,8 +230,6 @@ function add_adjacent(ligne, colonne) {
 function init_game() {
 
   // tracking Google Analytics
-  _gaq.push(['_trackEvent', 'Fruit Salad', 'Game start', 'Game start']);
-
   $('#zone_message').html('');
 
   score = 0;
@@ -493,7 +490,6 @@ function verif_tableau() {
         }, 7000);
       } else {
         // tracking Google Analytics
-        _gaq.push(['_trackEvent', 'Fruit Salad', 'Game over', 'Game over', score]);
         $('#zone_message').html('<div class="bad">GAME OVER</div>');
         $('#zone_message').append('<div class="good">' + score + ' points</div>');
         if (score > best_score) {
