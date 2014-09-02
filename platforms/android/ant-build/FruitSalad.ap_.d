@@ -32,11 +32,16 @@
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/cordova.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/cordova_plugins.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/css \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/fonts \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/images \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/index.html \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/index.html.bak \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/css/index.css \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/css/styles.css \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/fonts/Vanilla-webfont.svg \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/fonts/Vanilla-webfont.ttf \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/fonts/Vanilla-webfont.woff \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/images/anim \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/images/favicon \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/images/icones \
