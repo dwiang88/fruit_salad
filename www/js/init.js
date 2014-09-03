@@ -2,7 +2,7 @@
 var TAILLE_ICONE = 40;
 var NB_LIGNES = 8;
 var NB_COLONNES = 8;
-var NB_ICONES = 6;
+var NB_ICONES = 6; //icone的种类
 
 // variables
 var debug_mode = false;
@@ -228,8 +228,9 @@ function add_adjacent(ligne, colonne) {
 
 
 function init_game() {
+  //重新定义每个icone的偏移值
+  //生成8*8的icones
 
-  // tracking Google Analytics
   $('#zone_message').html('');
 
   score = 0;
@@ -239,12 +240,14 @@ function init_game() {
   tab_icones = [];
   var rendu_tableau = '';
 
-  clearTimeout(hint_timeout);
+  //暂时去掉以后在加上
+  //clearTimeout(hint_timeout);
   $('.hint').removeClass('hint');
   hint_mode = false;
 
   on_resize();
 
+  //生成8*8的icones
   for (var i = 0 ; i < NB_LIGNES ; i++) {
     tab_icones[i] = [];
     for (var j = 0 ; j < NB_COLONNES ; j++) {
@@ -264,7 +267,6 @@ function init_game() {
               nb_icon = Math.ceil(Math.random() * NB_ICONES);
             }
           }
-
         }
       }
 
@@ -272,9 +274,9 @@ function init_game() {
       rendu_tableau += '<div class="icone icone_' + nb_icon + '" data-ligne="' + i + '" data-col="' + j + '" data-icone="' + nb_icon + '" style="top: ' + Number(i*TAILLE_ICONE) + 'px; left: ' + Number(j*TAILLE_ICONE) + 'px;"></div>';
     }
   }  
-
+  
+  $('#buttons').html('<div class="button bt_new_game">Play again</div>')
   $('#zone_jeu').html(rendu_tableau);
-
   var local_best_score = localStorage.getItem('best_score');
   if (local_best_score != null) {
     best_score = local_best_score;
@@ -936,7 +938,6 @@ function test_possible_move() {
     $('#moves').removeClass('critical').html('');
   }
   
-
   return move_found;
 };
 
