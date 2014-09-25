@@ -303,17 +303,39 @@ function init_game() {
 
 function deplacement(icone_ligne, icone_col, binome_ligne, binome_col) {
   deplacement_en_cours = false;
-  deplacement_interdit = true;
+  deplacement_interdit = true; //interdit 禁止的
 
   clearTimeout(hint_timeout);
   $('.hint').removeClass('hint');
   hint_mode = false;
 
-  $binome = $('.icone[data-ligne=' + binome_ligne + '][data-col=' + binome_col + ']');
-
   $icone.css('z-index', 10);
 
   // icons switch positions
+  deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col)
+
+  // after the movement : check for new chains
+  setTimeout(function () {
+    if (!verif_tableau()) {
+      // no chain found : back to initial position
+      deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col)
+      setTimeout(function () {
+        verif_tableau();
+      }, 300);
+
+    }
+
+    $icone = undefined;
+    $binome = undefined;
+
+  }, 300);
+
+
+};
+
+function deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col){
+  $binome = $('.icone[data-ligne=' + binome_ligne + '][data-col=' + binome_col + ']');
+  $icone = $('.icone[data-ligne=' + icone_ligne + '][data-col=' + icone_col + ']');
 
   var icone_ligne_origin = icone_ligne;
   var icone_col_origin = icone_col;
@@ -338,44 +360,7 @@ function deplacement(icone_ligne, icone_col, binome_ligne, binome_col) {
 
   tab_icones[icone_ligne_origin][icone_col_origin] = binome_num_origin;
   tab_icones[binome_ligne_origin][binome_col_origin] = icone_num_origin;
-
-  // after the movement : check for new chains
-  setTimeout(function () {
-    if (!verif_tableau()) {
-      // no chain found : back to initial position
-
-      $icone.attr('data-ligne', icone_ligne_origin);
-      $icone.attr('data-col', icone_col_origin);
-      $binome.attr('data-ligne', binome_ligne_origin);
-      $binome.attr('data-col', binome_col_origin);
-
-      $icone.css({
-        'left': icone_col_origin*TAILLE_ICONE,
-        'top': icone_ligne_origin*TAILLE_ICONE
-      });
-      $binome.css({
-        'left': binome_col_origin*TAILLE_ICONE,
-        'top': binome_ligne_origin*TAILLE_ICONE
-      });
-
-      tab_icones[icone_ligne_origin][icone_col_origin] = icone_num_origin;
-      tab_icones[binome_ligne_origin][binome_col_origin] = binome_num_origin;
-
-      setTimeout(function () {
-        verif_tableau();
-      }, 300);
-
-    }
-
-    $icone = undefined;
-    $binome = undefined;
-
-  }, 300);
-
-
-};
-
-
+}
 
 function verif_tableau() {
 
