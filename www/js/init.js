@@ -324,13 +324,7 @@ function deplacement(icone_ligne, icone_col, binome_ligne, binome_col) {
       }, 300);
 
     }
-
-    $icone = undefined;
-    $binome = undefined;
-
   }, 300);
-
-
 };
 
 function deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col){
@@ -360,6 +354,8 @@ function deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col){
 
   tab_icones[icone_ligne_origin][icone_col_origin] = binome_num_origin;
   tab_icones[binome_ligne_origin][binome_col_origin] = icone_num_origin;
+  $icone = undefined;
+  $binome = undefined;
 }
 
 function verif_tableau() {
