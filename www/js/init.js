@@ -50,7 +50,7 @@ $(function () { // DOM ready
   });
 
   $(document).on('touchstart mousedown', '.icone', function (e) {
-  
+
     if (!deplacement_en_cours && !deplacement_interdit) {
       dragmove = false;
       $icone = $(this);
@@ -92,6 +92,7 @@ $(function () { // DOM ready
           // right
           if (icone_col < NB_COLONNES - 1) {
             dragmove = true;
+            //什么时候显示 class adjacent
             $('.icone').removeClass('click adjacent');
             deplacement(icone_ligne, icone_col, icone_ligne, icone_col + 1);
           }
@@ -128,6 +129,7 @@ $(function () { // DOM ready
   });
 
   $(document).on('touchend mouseup', '#zone_jeu', function (e) {
+    //在鼠标 拿开 或者 touch结束的时候 显示他的邻居节点
     if (deplacement_en_cours) {
       deplacement_en_cours = false;
       $icone.css('z-index', 10);
@@ -197,7 +199,7 @@ function verif_click($icone_test) {
       (icone_ref_ligne == icone_test_ligne && icone_ref_col == icone_test_col - 1) ||
       (icone_ref_ligne == icone_test_ligne && icone_ref_col == icone_test_col + 1) ||
       (icone_ref_ligne == icone_test_ligne - 1 && icone_ref_col == icone_test_col) ||
-      (icone_ref_ligne == icone_test_ligne + 1 && icone_ref_col == icone_test_col) 
+      (icone_ref_ligne == icone_test_ligne + 1 && icone_ref_col == icone_test_col)
     ) {
       $icone = $icone_ref;
       deplacement(icone_ref_ligne, icone_ref_col, icone_test_ligne, icone_test_col);
@@ -273,9 +275,9 @@ function init_game() {
       tab_icones[i][j] = nb_icon;
       rendu_tableau += '<div class="icone icone_' + nb_icon + '" data-ligne="' + i + '" data-col="' + j + '" data-icone="' + nb_icon + '" style="top: ' + Number(i*TAILLE_ICONE) + 'px; left: ' + Number(j*TAILLE_ICONE) + 'px;"></div>';
     }
-  }  
-  
-  $('#buttons').html('<div class="button bt_new_game">Play again</div>')
+  }
+
+  $('#buttons').html('<button class="button bt_new_game">Play again</button>')
   $('#zone_jeu').html(rendu_tableau);
   var local_best_score = localStorage.getItem('best_score');
   if (local_best_score != null) {
@@ -362,15 +364,15 @@ function deplacement(icone_ligne, icone_col, binome_ligne, binome_col) {
       setTimeout(function () {
         verif_tableau();
       }, 300);
-      
+
     }
 
     $icone = undefined;
     $binome = undefined;
 
   }, 300);
-  
-  
+
+
 };
 
 
@@ -449,7 +451,7 @@ function verif_tableau() {
           var $aff_score = $('<div class="aff_score" style="left:' + j*TAILLE_ICONE + 'px; top:' + i*TAILLE_ICONE + 'px;">+' + points + '</div>');
           $('#zone_jeu').append($aff_score);
           score += points;
-        }          
+        }
       }
     }
     $('#current_score_num').html(score);
@@ -509,7 +511,7 @@ function verif_tableau() {
         $('#zone_message').append('<div class="button bt_new_game">Play again</div>');
 
       }
-    }    
+    }
   }
 
   return chaine_trouvee;
@@ -619,7 +621,7 @@ function test_chaine(ligne, colonne) {
             }
           }
         }
-        
+
         i++;
       }
     }
@@ -725,9 +727,9 @@ function test_chaine(ligne, colonne) {
         }
 
         i++;
-      } 
+      }
     }
-  } 
+  }
   return chaine_trouvee;
 };
 
@@ -829,12 +831,12 @@ function chute_icones() {
             'top': -TAILLE_ICONE
           });
           $('#zone_jeu').append($new_icon);
-          
+
           $new_icon.animate({
             'top': i*TAILLE_ICONE
           }, 0);
 
-          
+
           tab_icones[i][j] = random_icone;
         } else {
           // icon found above : icon falling animation
@@ -937,7 +939,7 @@ function test_possible_move() {
   } else {
     $('#moves').removeClass('critical').html('');
   }
-  
+
   return move_found;
 };
 
@@ -1045,6 +1047,6 @@ function loadimages(imgArr,callback) {
         }
       });
     }
-  };    
+  };
   _loadAllImages(callback);
 }
