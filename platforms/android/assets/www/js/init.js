@@ -2,7 +2,7 @@
 var TAILLE_ICONE = 40;
 var NB_LIGNES = 8;
 var NB_COLONNES = 8;
-var NB_ICONES = 6;
+var NB_ICONES = 6; //icone的种类
 
 // variables
 var debug_mode = false;
@@ -50,7 +50,7 @@ $(function () { // DOM ready
   });
 
   $(document).on('touchstart mousedown', '.icone', function (e) {
-  
+
     if (!deplacement_en_cours && !deplacement_interdit) {
       dragmove = false;
       $icone = $(this);
@@ -92,6 +92,7 @@ $(function () { // DOM ready
           // right
           if (icone_col < NB_COLONNES - 1) {
             dragmove = true;
+            //什么时候显示 class adjacent
             $('.icone').removeClass('click adjacent');
             deplacement(icone_ligne, icone_col, icone_ligne, icone_col + 1);
           }
@@ -128,6 +129,7 @@ $(function () { // DOM ready
   });
 
   $(document).on('touchend mouseup', '#zone_jeu', function (e) {
+    //在鼠标 拿开 或者 touch结束的时候 显示他的邻居节点
     if (deplacement_en_cours) {
       deplacement_en_cours = false;
       $icone.css('z-index', 10);
@@ -197,7 +199,7 @@ function verif_click($icone_test) {
       (icone_ref_ligne == icone_test_ligne && icone_ref_col == icone_test_col - 1) ||
       (icone_ref_ligne == icone_test_ligne && icone_ref_col == icone_test_col + 1) ||
       (icone_ref_ligne == icone_test_ligne - 1 && icone_ref_col == icone_test_col) ||
-      (icone_ref_ligne == icone_test_ligne + 1 && icone_ref_col == icone_test_col) 
+      (icone_ref_ligne == icone_test_ligne + 1 && icone_ref_col == icone_test_col)
     ) {
       $icone = $icone_ref;
       deplacement(icone_ref_ligne, icone_ref_col, icone_test_ligne, icone_test_col);
@@ -228,8 +230,9 @@ function add_adjacent(ligne, colonne) {
 
 
 function init_game() {
+  //重新定义每个icone的偏移值
+  //生成8*8的icones
 
-  // tracking Google Analytics
   $('#zone_message').html('');
 
   score = 0;
@@ -239,12 +242,14 @@ function init_game() {
   tab_icones = [];
   var rendu_tableau = '';
 
-  clearTimeout(hint_timeout);
+  //暂时去掉以后在加上
+  //clearTimeout(hint_timeout);
   $('.hint').removeClass('hint');
   hint_mode = false;
 
   on_resize();
 
+  //生成8*8的icones
   for (var i = 0 ; i < NB_LIGNES ; i++) {
     tab_icones[i] = [];
     for (var j = 0 ; j < NB_COLONNES ; j++) {
@@ -264,17 +269,16 @@ function init_game() {
               nb_icon = Math.ceil(Math.random() * NB_ICONES);
             }
           }
-
         }
       }
 
       tab_icones[i][j] = nb_icon;
       rendu_tableau += '<div class="icone icone_' + nb_icon + '" data-ligne="' + i + '" data-col="' + j + '" data-icone="' + nb_icon + '" style="top: ' + Number(i*TAILLE_ICONE) + 'px; left: ' + Number(j*TAILLE_ICONE) + 'px;"></div>';
     }
-  }  
+  }
 
+  $('#buttons').html('<button class="button bt_new_game">Play again</button>')
   $('#zone_jeu').html(rendu_tableau);
-
   var local_best_score = localStorage.getItem('best_score');
   if (local_best_score != null) {
     best_score = local_best_score;
@@ -299,17 +303,33 @@ function init_game() {
 
 function deplacement(icone_ligne, icone_col, binome_ligne, binome_col) {
   deplacement_en_cours = false;
-  deplacement_interdit = true;
+  deplacement_interdit = true; //interdit 禁止的
 
   clearTimeout(hint_timeout);
   $('.hint').removeClass('hint');
   hint_mode = false;
 
-  $binome = $('.icone[data-ligne=' + binome_ligne + '][data-col=' + binome_col + ']');
-
   $icone.css('z-index', 10);
 
   // icons switch positions
+  deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col)
+
+  // after the movement : check for new chains
+  setTimeout(function () {
+    if (!verif_tableau()) {
+      // no chain found : back to initial position
+      deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col)
+      setTimeout(function () {
+        verif_tableau();
+      }, 300);
+
+    }
+  }, 300);
+};
+
+function deplacement_icones(icone_ligne, icone_col, binome_ligne, binome_col){
+  $binome = $('.icone[data-ligne=' + binome_ligne + '][data-col=' + binome_col + ']');
+  $icone = $('.icone[data-ligne=' + icone_ligne + '][data-col=' + icone_col + ']');
 
   var icone_ligne_origin = icone_ligne;
   var icone_col_origin = icone_col;
@@ -334,44 +354,9 @@ function deplacement(icone_ligne, icone_col, binome_ligne, binome_col) {
 
   tab_icones[icone_ligne_origin][icone_col_origin] = binome_num_origin;
   tab_icones[binome_ligne_origin][binome_col_origin] = icone_num_origin;
-
-  // after the movement : check for new chains
-  setTimeout(function () {
-    if (!verif_tableau()) {
-      // no chain found : back to initial position
-
-      $icone.attr('data-ligne', icone_ligne_origin);
-      $icone.attr('data-col', icone_col_origin);
-      $binome.attr('data-ligne', binome_ligne_origin);
-      $binome.attr('data-col', binome_col_origin);
-
-      $icone.css({
-        'left': icone_col_origin*TAILLE_ICONE,
-        'top': icone_ligne_origin*TAILLE_ICONE
-      });
-      $binome.css({
-        'left': binome_col_origin*TAILLE_ICONE,
-        'top': binome_ligne_origin*TAILLE_ICONE
-      });
-
-      tab_icones[icone_ligne_origin][icone_col_origin] = icone_num_origin;
-      tab_icones[binome_ligne_origin][binome_col_origin] = binome_num_origin;
-
-      setTimeout(function () {
-        verif_tableau();
-      }, 300);
-      
-    }
-
-    $icone = undefined;
-    $binome = undefined;
-
-  }, 300);
-  
-  
-};
-
-
+  $icone = undefined;
+  $binome = undefined;
+}
 
 function verif_tableau() {
 
@@ -447,7 +432,7 @@ function verif_tableau() {
           var $aff_score = $('<div class="aff_score" style="left:' + j*TAILLE_ICONE + 'px; top:' + i*TAILLE_ICONE + 'px;">+' + points + '</div>');
           $('#zone_jeu').append($aff_score);
           score += points;
-        }          
+        }
       }
     }
     $('#current_score_num').html(score);
@@ -507,7 +492,7 @@ function verif_tableau() {
         $('#zone_message').append('<div class="button bt_new_game">Play again</div>');
 
       }
-    }    
+    }
   }
 
   return chaine_trouvee;
@@ -617,7 +602,7 @@ function test_chaine(ligne, colonne) {
             }
           }
         }
-        
+
         i++;
       }
     }
@@ -723,9 +708,9 @@ function test_chaine(ligne, colonne) {
         }
 
         i++;
-      } 
+      }
     }
-  } 
+  }
   return chaine_trouvee;
 };
 
@@ -827,12 +812,12 @@ function chute_icones() {
             'top': -TAILLE_ICONE
           });
           $('#zone_jeu').append($new_icon);
-          
+
           $new_icon.animate({
             'top': i*TAILLE_ICONE
           }, 0);
 
-          
+
           tab_icones[i][j] = random_icone;
         } else {
           // icon found above : icon falling animation
@@ -935,7 +920,6 @@ function test_possible_move() {
   } else {
     $('#moves').removeClass('critical').html('');
   }
-  
 
   return move_found;
 };
@@ -1044,6 +1028,6 @@ function loadimages(imgArr,callback) {
         }
       });
     }
-  };    
+  };
   _loadAllImages(callback);
 }

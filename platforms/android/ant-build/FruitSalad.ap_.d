@@ -63,4 +63,5 @@
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/index.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/init.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/jquery.min.js \
+/Users/andyhu/Documents/mine/fruit_salad/platforms/android/assets/www/js/jquerymobile.js \
 /Users/andyhu/Documents/mine/fruit_salad/platforms/android/ant-build/AndroidManifest.xml \
