@@ -27,6 +27,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+       document.addEventListener("backbutton", onBackKeyDown, false); //返回键
     },
     // deviceready Event Handler
     //
@@ -34,6 +35,21 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+    },
+
+    function onConfirm(button) {
+        //alert('You selected button ' + button);
+        if(button==1) navigator.app.exitApp(); //选择了确定才执行退出
+    },
+    // Show a custom confirmation dialog
+    //
+    function onBackKeyDown() {
+        navigator.notification.confirm(
+            '按确定退出程序!',  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            '确定要退出程序吗?',            // title
+            '确定,取消'          // buttonLabels
+        );
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
